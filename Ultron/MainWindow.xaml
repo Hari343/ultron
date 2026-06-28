@@ -1,0 +1,140 @@
+﻿<Window x:Class="Ultron.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ultron"
+        mc:Ignorable="d"
+        Title="Ultron" Height="380" Width="700"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent">
+
+    <Window.Resources>
+        <!-- Dark theme brushes -->
+        <SolidColorBrush x:Key="WindowBackground" Color="Transparent" />
+        <SolidColorBrush x:Key="CardBackground" Color="#FF1E1E2A" />
+        <SolidColorBrush x:Key="ControlBackground" Color="#FF2A2A36" />
+        <SolidColorBrush x:Key="Accent" Color="#FF5AA9FF" />
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource ControlBackground}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="#FF3A3A46" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="Margin" Value="0,4,0,12" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="2" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Background" Value="{StaticResource ControlBackground}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="#FF3A3A46" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="Margin" Value="0,4,0,12" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="2" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource Accent}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Padding" Value="10,6" />
+            <Setter Property="Margin" Value="6,0,6,0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="{StaticResource WindowBackground}">
+        <!-- Outer centered card with rounded corners -->
+        <Border x:Name="CardBorder" Width="700" Height="380" CornerRadius="16" Background="{StaticResource CardBackground}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="18" MouseLeftButtonDown="CardBorder_MouseLeftButtonDown">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Header area -->
+                <DockPanel Grid.Row="0" LastChildFill="True" Margin="0,0,0,12">
+                    <TextBlock Text="Ultron" FontSize="18" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" />
+
+                </DockPanel>
+
+                <!-- Form area -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="1.4*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,18,0">
+                        <TextBlock Text="IP Address" Foreground="#FFBFBFC7" />
+                        <TextBox x:Name="IpTextBox" />
+
+                        <TextBlock Text="Username" Foreground="#FFBFBFC7" />
+                        <TextBox x:Name="UsernameTextBox" />
+
+                        <TextBlock Text="Password" Foreground="#FFBFBFC7" />
+                        <PasswordBox x:Name="PasswordBox" />
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Top">
+                        <TextBlock Text="Connections" Foreground="#FFBFBFC7" Margin="0,0,0,8" HorizontalAlignment="Center" />
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Width="160">
+                            <Button x:Name="RdpButton" Width="160" Height="34" Margin="0,0,0,11" Click="RdpButton_Click">RDP</Button>
+                            <Button x:Name="SshButton" Width="160" Height="34" Margin="0,0,0,11" Click="SshButton_Click">SSH</Button>
+                            <Button x:Name="TelnetButton" Width="160" Height="34" Margin="0,0,0,11" Click="TelnetButton_Click">Telnet</Button>
+                            <Button x:Name="UltronButton" Width="160" Height="34" Margin="0,0,0,11" Click="UltronButton_Click">Ultron Mode</Button>
+                        </StackPanel>
+
+                        <TextBlock Text="Status" Foreground="#FFBFBFC7" Margin="0,16,0,4" HorizontalAlignment="Center" />
+                        <Border Background="#002A2A36" CornerRadius="8" Padding="8">
+                            <TextBlock x:Name="StatusTextBlock" Text="Ready" Foreground="#00FF00" TextWrapping="Wrap" HorizontalAlignment="Center"/>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Footer -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+                    <TextBlock Text="0000 0000 0001 1011" Foreground="#FF8F8F99" VerticalAlignment="Center" Margin="0,0,12,0" HorizontalAlignment="Center" />
+                    <Button Width="86" Height="20" Click="CloseButton_Click" Background="#FF44444F">Close</Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
